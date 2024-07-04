@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  syslog-receiver:
+    build: ./syslog_receiver  # Replace with your actual path or image name
+    ports:
+      - "514:514/udp"
+    volumes:
+      - ./syslog-receiver/logs:/app/logs  # Adjust the volume path as needed
+    restart: unless-stopped
+
+  syslog-client:
+    build: ./syslog_client  # Replace with your actual path or image name
+    environment:
+      - SYSLOG_SERVER=syslog-receiver  # Update with the actual hostname of your syslog-receiver service
+    depends_on:
+      - syslog-receiver
+    restart: unless-stopped
