@@ -1,0 +1,45 @@
+static_resources:
+  listeners:
+  - name: listener_0
+    address:
+      socket_address:
+        protocol: UDP
+        address: 0.0.0.0
+        port_value: 10000
+    listener_filters:
+    - name: envoy.filters.udp_listener.udp_proxy
+      typed_config:
+        '@type': type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig
+        stat_prefix: service
+        matcher:
+          on_no_match:
+            action:
+              name: route
+              typed_config:
+                '@type': type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.Route
+                cluster: syslog_receiver
+
+  clusters:
+  - name: syslog_receiver
+    type: STRICT_DNS
+    lb_policy: ROUND_ROBIN
+    circuit_breakers:
+      thresholds:
+        max_connections: 500
+        max_pending_requests: 500
+        max_requests: 500
+    load_assignment:
+      cluster_name: syslog_receiver
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: syslog-receiver
+                port_value: 514
+
+admin:
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 10001

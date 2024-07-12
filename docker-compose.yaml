@@ -1,18 +1,28 @@
 version: '3.8'
 
 services:
+
+  envoy-proxy:
+    build: ./envoy_proxy
+    ports:
+    - "${PORT_PROXY:-10000}:10000/udp"
+    - "${PORT_ADMIN:-10001}:10001"
+
   syslog-receiver:
-    build: ./syslog_receiver  # Replace with your actual path or image name
+    build: ./syslog_receiver
     ports:
       - "514:514/udp"
-    volumes:
-      - ./syslog-receiver/logs:/app/logs  # Adjust the volume path as needed
+    cap_add:
+      - NET_ADMIN
     restart: unless-stopped
 
   syslog-client:
-    build: ./syslog_client  # Replace with your actual path or image name
+    build: ./syslog_client
     environment:
-      - SYSLOG_SERVER=syslog-receiver  # Update with the actual hostname of your syslog-receiver service
+      - SYSLOG_SERVER=syslog-receiver
     depends_on:
       - syslog-receiver
+      - envoy-proxy
+    deploy:
+      replicas: 40
     restart: unless-stopped
