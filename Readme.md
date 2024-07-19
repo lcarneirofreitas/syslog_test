@@ -34,7 +34,7 @@ Running the stack with docker compose:
 docker compose up --build -d
 ```
 
-![Diagram 1](images/1.png)
+<img src="1.png" alt="Diagram 1" width="400"/>
 
 In another terminal, you can view the Envoy proxy statistics:
 
@@ -46,7 +46,7 @@ while true; do
 done
 ```
 
-![Diagram 2](images/2.png)
+<img src="2.png" alt="Diagram 2" width="400"/>
 
 ## License
 
