@@ -34,6 +34,8 @@ Running the stack with docker compose:
 docker compose up --build -d
 ```
 
+![Diagram 1](images/1.png)
+
 In another terminal, you can view the Envoy proxy statistics:
 
 ```bash
@@ -43,6 +45,8 @@ while true; do
   sleep 1
 done
 ```
+
+![Diagram 2](images/2.png)
 
 ## License
 
