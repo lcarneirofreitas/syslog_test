@@ -7,11 +7,20 @@ services:
     ports:
     - "${PORT_PROXY:-10000}:10000/udp"
     - "${PORT_ADMIN:-10001}:10001"
+    restart: unless-stopped
 
-  syslog-receiver:
-    build: ./syslog_receiver
+  syslog-server-1:
+    build: ./syslog_server
     ports:
       - "514:514/udp"
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+  syslog-server-2:
+    build: ./syslog_server
+    ports:
+      - "515:515/udp"
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
@@ -19,10 +28,13 @@ services:
   syslog-client:
     build: ./syslog_client
     environment:
-      - SYSLOG_SERVER=syslog-receiver
+      - ENVOY_SERVER=envoy-proxy
+      - ENVOY_PORT=10000
+      - SLEEP_TIMEOUT=0
     depends_on:
-      - syslog-receiver
+      - syslog-server-1
+      - syslog-server-2
       - envoy-proxy
     deploy:
-      replicas: 40
+      replicas: 5
     restart: unless-stopped

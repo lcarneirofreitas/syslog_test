@@ -17,26 +17,31 @@ static_resources:
               name: route
               typed_config:
                 '@type': type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.Route
-                cluster: syslog_receiver
+                cluster: syslog_server
 
   clusters:
-  - name: syslog_receiver
+  - name: syslog_server
     type: STRICT_DNS
     lb_policy: ROUND_ROBIN
     circuit_breakers:
       thresholds:
-        max_connections: 500
-        max_pending_requests: 500
-        max_requests: 500
+        max_connections: 50
+        max_pending_requests: 50
+        max_requests: 50
     load_assignment:
-      cluster_name: syslog_receiver
+      cluster_name: syslog_server
       endpoints:
       - lb_endpoints:
         - endpoint:
             address:
               socket_address:
-                address: syslog-receiver
+                address: syslog-server-1
                 port_value: 514
+        - endpoint:
+            address:
+              socket_address:
+                address: syslog-server-2
+                port_value: 515
 
 admin:
   address:
