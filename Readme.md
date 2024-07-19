@@ -10,10 +10,18 @@ The components of this stack are:
 
 ## Table of Contents
 
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 - [Contact](#contact)
+
+## Requirements
+
+- **Docker**: [Install Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose**: [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+Ensure that both Docker and Docker Compose are installed and running on your system to properly execute the stack.
 
 ## Installation
 
