@@ -1,4 +1,4 @@
-# Project Name
+# Syslog_test (Envoy proxy)
 
 This project is a simple test that simulates using Envoy as a UDP connection proxy for syslog servers, which are simulated using Python.
 
