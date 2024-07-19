@@ -42,7 +42,7 @@ Running the stack with docker compose:
 docker compose up --build -d
 ```
 
-<img src="images/1.png" alt="Diagram 1" width="400"/>
+<img src="images/1.png" alt="Diagram 1" width="600"/>
 
 In another terminal, you can view the Envoy proxy statistics:
 
