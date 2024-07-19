@@ -54,7 +54,7 @@ while true; do
 done
 ```
 
-<img src="images/2.png" alt="Diagram 2" width="400"/>
+<img src="images/2.png" alt="Diagram 2" width="600"/>
 
 ## License
 
